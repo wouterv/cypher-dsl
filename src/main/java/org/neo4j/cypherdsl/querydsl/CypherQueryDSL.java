@@ -39,6 +39,7 @@ import org.neo4j.cypherdsl.expression.BooleanExpression;
 import org.neo4j.cypherdsl.expression.Expression;
 import org.neo4j.cypherdsl.expression.NumericExpression;
 import org.neo4j.cypherdsl.expression.StringExpression;
+import org.neo4j.cypherdsl.query.FunctionExpression;
 import org.neo4j.cypherdsl.query.Value;
 
 /**
@@ -145,7 +146,7 @@ public class CypherQueryDSL
                 }
                 else if ( id.equals( Ops.EXISTS.getId() ) )
                 {
-                    return has( (Property) arg( operation.getArg( 0 ) ) );
+                    return has( (Expression) arg( operation.getArg( 0 ) ) );
                 }
                 else if ( id.equals( Ops.IS_NULL.getId() ) )
                 {
@@ -154,6 +155,10 @@ public class CypherQueryDSL
                 else if ( id.equals( Ops.IS_NOT_NULL.getId() ) )
                 {
                     return isNotNull( (Expression) arg( operation.getArg( 0 ) ) );
+                }
+				else if ( id.equals( Ops.LIKE.getId() ) )
+                {
+                    return arg( operation.getArg( 0 ) ).regexp( arg( operation.getArg( 1 ) ) );
                 }
                 else
                 {
